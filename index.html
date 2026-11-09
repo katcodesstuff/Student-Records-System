@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Records System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">📘 Student Records System</div>
+    <p>Document requests and status tracking</p>
+  </header>
+  <main class="container">
+    <section id="login" class="panel">
+      <h1>Welcome</h1>
+      <p>Choose how you want to sign in.</p>
+      <div class="tabs">
+        <button class="tab active" data-role="student">Student</button>
+        <button class="tab" data-role="staff">Office Staff</button>
+      </div>
+      <form id="loginForm">
+        <label id="userLabel" for="username">Student ID</label>
+        <input id="username" autocomplete="username" required placeholder="Enter student ID">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+        <button class="primary" type="submit">Log in</button>
+      </form>
+      <p class="hint">Demo student: STU001 / 1234<br>Demo staff: admin / admin123</p>
+      <p id="loginMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section id="dashboard" class="panel hidden">
+      <div class="dashboard-head">
+        <div><h1 id="welcomeTitle">Dashboard</h1><p id="roleText"></p></div>
+        <button id="logout" class="secondary">Log out</button>
+      </div>
+      <div id="studentView" class="hidden">
+        <h2>Request a document</h2>
+        <form id="requestForm">
+          <label for="studentName">Full name</label>
+          <input id="studentName" required placeholder="Your full name">
+          <label for="documentType">Document type</label>
+          <select id="documentType">
+            <option>Certificate</option>
+            <option>Transcript of Records</option>
+            <option>Enrollment Document</option>
+          </select>
+          <button class="primary" type="submit">Submit request</button>
+        </form>
+        <h2>My requests</h2>
+        <div id="myRequests"></div>
+      </div>
+      <div id="staffView" class="hidden">
+        <h2>All submitted requests</h2>
+        <div id="allRequests"></div>
+      </div>
+    </section>
+  </main>
+  <footer>Student Records System · Classroom demonstration</footer>
+  <script src="script.js"></script>
+</body>
+</html>

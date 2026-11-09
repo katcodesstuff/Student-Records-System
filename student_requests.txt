@@ -1,0 +1,1 @@
+# Demo request storage note: browser demo data is saved in localStorage.
