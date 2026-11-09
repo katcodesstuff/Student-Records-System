@@ -1,0 +1,103 @@
+const studentLogin = document.getElementById("studentLogin");
+const staffLogin = document.getElementById("staffLogin");
+
+let currentUser = null;
+
+function getRequests() {
+    return JSON.parse(localStorage.getItem("studentRequests")) || [];
+}
+
+function saveRequests(requests) {
+    localStorage.setItem("studentRequests", JSON.stringify(requests));
+}
+
+function loginStudent() {
+    const username = document.getElementById("studentUsername").value;
+    const password = document.getElementById("studentPassword").value;
+
+    if (username === "STU001" && password === "1234") {
+        currentUser = "student";
+        alert("Student login successful!");
+        showDashboard("student");
+    } else {
+        alert("Incorrect student username or password.");
+    }
+}
+
+function loginStaff() {
+    const username = document.getElementById("staffUsername").value;
+    const password = document.getElementById("staffPassword").value;
+
+    if (username === "admin" && password === "admin123") {
+        currentUser = "staff";
+        alert("Staff login successful!");
+        showDashboard("staff");
+    } else {
+        alert("Incorrect staff username or password.");
+    }
+}
+
+function showDashboard(role) {
+    const studentPanel = document.getElementById("studentDashboard");
+    const staffPanel = document.getElementById("staffDashboard");
+
+    if (studentPanel) studentPanel.style.display = role === "student" ? "block" : "none";
+    if (staffPanel) staffPanel.style.display = role === "staff" ? "block" : "none";
+}
+
+function submitRequest() {
+    const name = document.getElementById("studentName").value;
+    const request = document.getElementById("requestType").value;
+    const details = document.getElementById("requestDetails").value;
+
+    if (!name || !request) {
+        alert("Please complete the required fields.");
+        return;
+    }
+
+    const requests = getRequests();
+
+    requests.push({
+        id: Date.now(),
+        name,
+        request,
+        details,
+        status: "Pending"
+    });
+
+    saveRequests(requests);
+    alert("Your request has been submitted!");
+    document.getElementById("studentName").value = "";
+    document.getElementById("requestDetails").value = "";
+
+    displayRequests();
+}
+
+function displayRequests() {
+    const list = document.getElementById("requestList");
+    if (!list) return;
+
+    const requests = getRequests();
+    list.innerHTML = "";
+
+    requests.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "request-item";
+        div.textContent = `${item.name} - ${item.request} - ${item.status}`;
+        list.appendChild(div);
+    });
+}
+
+function updateRequest(id, status) {
+    const requests = getRequests();
+    const updated = requests.map(item =>
+        item.id === id ? { ...item, status } : item
+    );
+
+    saveRequests(updated);
+    displayRequests();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    displayRequests();
+});
